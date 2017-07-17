@@ -1,7 +1,7 @@
 {
   "name": "nextbot-messenger",
-  "version": "1.0.0",
-  "description": "Messenger Connector",
+  "version": "1.0.1",
+  "description": "Facebook Messenger Connector",
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.js",
