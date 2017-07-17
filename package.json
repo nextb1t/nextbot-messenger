@@ -1,27 +1,33 @@
 {
-  "name": "ts-jest-wallaby-vscode",
+  "name": "nextbot-messenger",
   "version": "1.0.0",
-  "description": "Template with Typescript, Jest, Wallaby and VSCode settings",
-  "main": "app.js",
+  "description": "Messenger Connector",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./dist/app.js",
-    "dev": "nodemon ./dist/app.js",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon ./dist/index.js",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nextb1t/ts-jest-wallaby-vscode.git"
+    "url": "git+https://github.com/nextb1t/nextbot-messenger.git"
   },
   "keywords": [
     "typescript"
   ],
   "bugs": {
-    "url": "https://github.com/nextb1t/ts-jest-wallaby-vscode.git/issues"
+    "url": "https://github.com/nextb1t/nextbot-messenger.git/issues"
   },
-  "homepage": "https://github.com/nextb1t/ts-jest-wallaby-vscode.git#readme",
+  "homepage": "https://github.com/nextb1t/nextbot-messenger.git#readme",
   "author": "nextb1t",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@types/request": "0.0.45",
+    "body-parser": "^1.17.2",
+    "crypto": "0.0.3",
+    "request": "^2.81.0",
+    "typescript.events": "^6.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^19.2.4",
     "nodemon": "^1.11.0",
