@@ -39,6 +39,9 @@ export class MessengerConnector extends Event {
       }
       this.botBoxConfig = <IMessengerBotBoxConfig>config
     }
+
+    // creating all MCI
+    for (let botId in this.botBoxConfig) this.createMCI(botId)
     // console.log('[MessengerConnector] botBoxConfig:', this.botBoxConfig)
 
     // Render a index message
@@ -73,7 +76,7 @@ export class MessengerConnector extends Event {
     // Make sure this is a page subscription
     if (data.object === 'page') {
       // console.log('botId', botId)
-      let mci: MessengerConnectorInstance = this.findOrCreateMCI(botId)
+      let mci: MessengerConnectorInstance = this.id(botId)
       // Iterate over each entry
       // There may be multiple if batched
       data.entry.forEach((pageEntry) => {
@@ -224,21 +227,15 @@ export class MessengerConnector extends Event {
     return res
   }
 
-  private findOrCreateMCI(botId: string): MessengerConnectorInstance {
+  private createMCI(botId: string) {
     if (!this.MCI) { this.MCI = {} }
-
     // botId is always going to be at least DEFAULT_BOTID here
-    if (!(botId in this.MCI)) {
-      // creating new instance if not found
-      // console.log('creating MC for', botId)
-      this.MCI[botId] = new MessengerConnectorInstance(this.botBoxConfig[botId], botId)
-    }
-
-    return this.MCI[botId]
+    this.MCI[botId] = new MessengerConnectorInstance(this.botBoxConfig[botId], botId)
   }
 
   public id(botId: string = DEFAULT_BOTID): MessengerConnectorInstance {
-    return this.findOrCreateMCI(botId)
+    if (!this.MCI[botId]) throw 'No bot with this ID "' + botId + '"'
+    return this.MCI[botId]
   }
 }
 

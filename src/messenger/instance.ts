@@ -9,7 +9,7 @@ class MessengerConnectorInstance {
 
   constructor(botConfig: IMessengerBotConfig, botId: string) {
     this.botId = botId
-    console.log(`# Messenger bot with ID "${botId}" has been created`)
+    console.log(`# Messenger Connector for botId "${botId}" has been created`)
 
     // all config varuables are required to create a Messenger bot
     if (!(botConfig.appSecret && botConfig.pageAccessToken &&
@@ -229,6 +229,52 @@ class MessengerConnectorInstance {
       message: {
         text: messageText,
         metadata: "DEVELOPER_DEFINED_METADATA"
+      }
+    }
+    return this.callSendAPI(messageData)
+  }
+
+  /* Send an image using the Send API */
+  sendImageMessage(recipientId, imgPath, fromServer = true) {
+    console.log('FBBOT: sendImageMessage:', this.botConfig.serverURL + imgPath)
+    const fullImgPath = (fromServer) ? this.botConfig.serverURL + imgPath : imgPath
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "image",
+          payload: {
+            url: fullImgPath
+          }
+        }
+      }
+    }
+    return this.callSendAPI(messageData)
+  }
+
+  /* Send a message with Quick Reply buttons */
+  sendQuickReply(recipientId, messageText, buttons) {
+    if(!(buttons)) throw "ERROR: Quick reply with no buttons!"
+      
+    let quick_replies_arr = []
+    for(let i = 0; i < buttons.length; i++) {
+      quick_replies_arr[i] = {
+        "content_type": "text",
+        "title": buttons[i].title,
+        "payload": buttons[i].callback
+      }
+    }
+
+    // console.log(quick_replies_arr)
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageText,
+        quick_replies: quick_replies_arr
       }
     }
     return this.callSendAPI(messageData)
